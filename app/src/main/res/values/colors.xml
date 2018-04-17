@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorVeryBadBMIOrWrongData">#FF0000</color>
+    <color name="colorBadBMI">#FFF74A</color>
+    <color name="colorGoodBMI">#01E101</color>
+
+
+</resources>

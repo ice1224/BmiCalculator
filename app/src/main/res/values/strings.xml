@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BMI</string>
+    <string name="author_activity_name">BMI - Author</string>
+    <string name="kgm_tv">kg/m</string>
+    <string name="lbin_tv">lb/in</string>
+    <string name="height_tv">HEIGHT</string>
+    <string name="mass_tv">MASS</string>
+    <string name="count_button">Count</string>
+    <string name="BMI_tv">Your BMI:</string>
+    <string name="wrong_data">Wrong Data</string>
+    <string name="result_tv"></string>
+    <string name="save_menu">Save</string>
+    <string name="share_menu">Share</string>
+    <string name="author_menu">Author</string>
+    <string name="share_using_title">Share using</string>
+    <string name="share_BMI_title">My BMI</string>
+    <string name="share_BMI_text">My BMI is</string>
+
+    <string name="author_text">Hello!\nI\'m Mariusz Kobiela.\nI\'m the author of this application.\nIf you have any questions, please write to:\n\nmariuszkobiela1224\n@gmail.com</string>
+
+
+</resources>
