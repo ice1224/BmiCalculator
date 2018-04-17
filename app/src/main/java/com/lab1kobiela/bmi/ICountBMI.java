@@ -6,6 +6,8 @@ package com.lab1kobiela.bmi;
 
 public interface ICountBMI {
     boolean isMassValid(float m);
+
     boolean isHeightValid(float h);
+
     float countBMI(float m, float h);
 }

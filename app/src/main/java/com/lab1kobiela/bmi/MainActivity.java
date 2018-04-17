@@ -1,5 +1,6 @@
 package com.lab1kobiela.bmi;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private static final float BMI_VALUE_BAD_BOTTOM = 16;
     private static final float BMI_VALUE_BAD_TOP = 35;
-    private static final float BMI_VALUE_GOOD_BOTTOM = 18.5f ;
+    private static final float BMI_VALUE_GOOD_BOTTOM = 18.5f;
     private static final float BMI_VALUE_GOOD_TOP = 25;
     private static final float LB_TO_KG = 0.454f;
     private static final float IN_TO_M = 0.0254f;
@@ -50,25 +51,25 @@ public class MainActivity extends AppCompatActivity {
         readSavedValues();
     }
 
-    private void readSavedValues(){
+    private void readSavedValues() {
         sharedPreferences = getSharedPreferences("com.lab1kobiela.bmi", Context.MODE_PRIVATE);
 
-        float m = sharedPreferences.getFloat("Mass",0f);
-        float h = sharedPreferences.getFloat("Height",0f);
-        if(m>0&&h>0) {
+        float m = sharedPreferences.getFloat("Mass", 0f);
+        float h = sharedPreferences.getFloat("Height", 0f);
+        if (m > 0 && h > 0) {
             et_Mass.setText(String.valueOf(m));
             et_Height.setText(String.valueOf(h));
-            sw_Unit.setChecked(sharedPreferences.getBoolean("UnitLbIn",false));
+            sw_Unit.setChecked(sharedPreferences.getBoolean("UnitLbIn", false));
         }
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             float fSavedValue = savedInstanceState.getFloat("BMIvalue");
-            if(fSavedValue!=0f) {
-                if(fSavedValue==-1.0f) printWrongData();
+            if (fSavedValue != 0f) {
+                if (fSavedValue == -1.0f) printWrongData();
                 else printResult(fSavedValue);
             }
         }
@@ -77,10 +78,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(!tv_Result.getText().toString().equals("")) {
+        if (!tv_Result.getText().toString().equals("")) {
             String value = tv_Result.getText().toString();
             value = value.replace(",", ".");
-            if(value.equals(getString(R.string.wrong_data)))
+            if (value.equals(getString(R.string.wrong_data)))
                 value = "-1.0";
             outState.putFloat("BMIvalue", Float.valueOf(value));
         }
@@ -95,17 +96,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         //enabling save button
-        try{
+        try {
             countBMI();
             menu.getItem(0).setEnabled(true);
-        }catch(Exception e) {
+        } catch (Exception e) {
             menu.getItem(0).setEnabled(false);
         }
 
         //enabling share button
-        if(tv_Result.getText().toString().equals("")||tv_Result.getText().toString().equals(getString(R.string.wrong_data)))
+        if (tv_Result.getText().toString().equals("") || tv_Result.getText().toString().equals(getString(R.string.wrong_data)))
             menu.getItem(1).setEnabled(false);
         else menu.getItem(1).setEnabled(true);
         return true;
@@ -133,15 +134,15 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bCount)
     public void countBMIOnClick() {
         hideSoftKeyboard();
-        try{
+        try {
             printResult(countBMI());
-        }catch(Exception e){
+        } catch (Exception e) {
             printWrongData();
         }
     }
 
 
-    private void saveMassAndHeight(){
+    private void saveMassAndHeight() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat("Mass", Float.valueOf(et_Mass.getText().toString()));
         editor.putFloat("Height", Float.valueOf(et_Height.getText().toString()));
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void shareResult(){
+    private void shareResult() {
         Intent myIntent = new Intent(Intent.ACTION_SEND);
         myIntent.setType("text/plain");
         myIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_BMI_title));
@@ -157,47 +158,50 @@ public class MainActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(myIntent, getString(R.string.share_using_title)));
     }
 
-    private void showAuthor(){
+    private void showAuthor() {
         Intent intentAuthor = new Intent(MainActivity.this, AuthorActivity.class);
         startActivity(intentAuthor);
     }
 
-    private float countBMI(){
+    private float countBMI() {
         CountBMIForKgM counter = new CountBMIForKgM();
         float mass = Float.valueOf(et_Mass.getText().toString());
         float height = Float.valueOf(et_Height.getText().toString());
-        if(sw_Unit.isChecked()){
-            mass = mass*LB_TO_KG;
-            height = height*IN_TO_M;
+        if (sw_Unit.isChecked()) {
+            mass = mass * LB_TO_KG;
+            height = height * IN_TO_M;
         }
-        return counter.countBMI(mass,height);
+        return counter.countBMI(mass, height);
     }
 
-    private void printResult(float BMIvalue){
+    @SuppressLint("DefaultLocale")
+    private void printResult(float BMIvalue) {
         changeOutputColor(BMIvalue);
         tv_Result.setText(String.format("%.2f", BMIvalue));
     }
 
 
-    private void printWrongData(){
+    private void printWrongData() {
         tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorVeryBadBMIOrWrongData));
         tv_Result.setText(getString(R.string.wrong_data));
     }
 
 
-
-
-    private void changeOutputColor(float BMIvalue){
-        if(BMIvalue<BMI_VALUE_BAD_BOTTOM||BMIvalue>=BMI_VALUE_BAD_TOP)          tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorVeryBadBMIOrWrongData));
-        else if(BMIvalue<BMI_VALUE_GOOD_BOTTOM||BMIvalue>=BMI_VALUE_GOOD_TOP)   tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorBadBMI));
-        else                                                                    tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorGoodBMI));
+    private void changeOutputColor(float BMIvalue) {
+        if (BMIvalue < BMI_VALUE_BAD_BOTTOM || BMIvalue >= BMI_VALUE_BAD_TOP)
+            tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorVeryBadBMIOrWrongData));
+        else if (BMIvalue < BMI_VALUE_GOOD_BOTTOM || BMIvalue >= BMI_VALUE_GOOD_TOP)
+            tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorBadBMI));
+        else tv_Result.setTextColor(ContextCompat.getColor(this, R.color.colorGoodBMI));
     }
 
     private void hideSoftKeyboard() {
         View view = getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
 
         }
     }

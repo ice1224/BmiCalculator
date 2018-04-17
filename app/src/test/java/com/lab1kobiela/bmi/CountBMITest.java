@@ -1,6 +1,7 @@
 package com.lab1kobiela.bmi;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -16,100 +17,93 @@ public class CountBMITest {
     //    THEN
 
     @Test
-    public void mUnderZero(){
-        testMass = - 5.0f;
+    public void mUnderZero() {
+        testMass = -5.0f;
         boolean result = counter.isMassValid(testMass);
         assertFalse(result);
     }
 
     @Test
-    public void mEqualsZero(){
+    public void mEqualsZero() {
         testMass = 0.0f;
         boolean result = counter.isMassValid(testMass);
         assertFalse(result);
     }
 
     @Test
-    public void mUnderBottomLimit(){
+    public void mUnderBottomLimit() {
         testMass = CountBMIForKgM.MIN_MASS - 1;
         boolean result = counter.isMassValid(testMass);
         assertFalse(result);
     }
 
     @Test
-    public void mEqualsBottomLimit(){
-        testMass = CountBMIForKgM.MIN_MASS ;
+    public void mEqualsBottomLimit() {
+        testMass = CountBMIForKgM.MIN_MASS;
         boolean result = counter.isMassValid(testMass);
         assertTrue(result);
     }
 
     @Test
-    public void mEqualsTopLimit(){
-        testMass = CountBMIForKgM.MAX_MASS ;
+    public void mEqualsTopLimit() {
+        testMass = CountBMIForKgM.MAX_MASS;
         boolean result = counter.isMassValid(testMass);
         assertTrue(result);
     }
 
     @Test
-    public void mAboveTopLimit(){
-        testMass = CountBMIForKgM.MAX_MASS+1 ;
+    public void mAboveTopLimit() {
+        testMass = CountBMIForKgM.MAX_MASS + 1;
         boolean result = counter.isMassValid(testMass);
         assertFalse(result);
     }
 
     @Test
-    public void mCorrectValue(){
-        testMass = CountBMIForKgM.MIN_MASS+1 ;
+    public void mCorrectValue() {
+        testMass = CountBMIForKgM.MIN_MASS + 1;
         boolean result = counter.isMassValid(testMass);
         assertTrue(result);
     }
 
 
-
-
-
-
-
-
-
     @Test
-    public void hUnderZero(){
-        testHeight = - 5.0f;
+    public void hUnderZero() {
+        testHeight = -5.0f;
         boolean result = counter.isHeightValid(testHeight);
         assertFalse(result);
     }
 
     @Test
-    public void hEqualsZero(){
+    public void hEqualsZero() {
         testHeight = 0.0f;
         boolean result = counter.isHeightValid(testHeight);
         assertFalse(result);
     }
 
     @Test
-    public void hUnderBottomLimit(){
+    public void hUnderBottomLimit() {
         testHeight = CountBMIForKgM.MIN_HEIGHT - 1;
         boolean result = counter.isHeightValid(testHeight);
         assertFalse(result);
     }
 
     @Test
-    public void hEqualsBottomLimit(){
-        testHeight = CountBMIForKgM.MIN_HEIGHT ;
+    public void hEqualsBottomLimit() {
+        testHeight = CountBMIForKgM.MIN_HEIGHT;
         boolean result = counter.isHeightValid(testHeight);
         assertTrue(result);
     }
 
     @Test
-    public void hEqualsTopLimit(){
-        testHeight = CountBMIForKgM.MAX_HEIGHT ;
+    public void hEqualsTopLimit() {
+        testHeight = CountBMIForKgM.MAX_HEIGHT;
         boolean result = counter.isHeightValid(testHeight);
         assertTrue(result);
     }
 
     @Test
-    public void hAboveTopLimit(){
-        testHeight = CountBMIForKgM.MAX_HEIGHT+1 ;
+    public void hAboveTopLimit() {
+        testHeight = CountBMIForKgM.MAX_HEIGHT + 1;
         boolean result = counter.isHeightValid(testHeight);
         assertFalse(result);
     }
@@ -120,10 +114,6 @@ public class CountBMITest {
         boolean result = counter.isHeightValid(testHeight);
         assertTrue(result);
     }
-
-
-
-
 
 
     @Test
